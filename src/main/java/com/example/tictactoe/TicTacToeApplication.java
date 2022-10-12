@@ -1,6 +1,7 @@
 package com.example.tictactoe;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,14 +15,16 @@ import java.util.ArrayList;
 public class TicTacToeApplication extends Application {
 
     private ArrayList<Button> playBtns;
+    private String currentPlayer;
 
     public TicTacToeApplication() {
         this.playBtns = new ArrayList<>();
+        this.currentPlayer = "X";
     }
 
     @Override
     public void start(Stage stage) {
-        String currentPlayer = "X";
+
         BorderPane layout = new BorderPane();
         GridPane gameGrid = new GridPane();
 
@@ -36,17 +39,29 @@ public class TicTacToeApplication extends Application {
         Button b8 = new Button("");
         Button b9 = new Button("");
 
+        turnInfo.setFont(Font.font("Monospaced bold", 40));
         styleButtons(b1, b2, b3, b4, b5, b6, b7, b8, b9);
 
         setGrid(gameGrid, b1, b2, b3, b4, b5, b6, b7, b8, b9);
+
 
         this.playBtns = addBtnsToArrayList(b1, b2, b3, b4, b5, b6, b7, b8, b9);
 
         for (Button btn: this.playBtns) {
             btn.setOnAction((event) -> {
+                if (!btn.getText().isEmpty()) {
+                    return;
+                }
 
+                btn.setText(this.currentPlayer);
+
+                switchPlayer();
+                turnInfo.setText("Turn: " + currentPlayer);
+                defineWinner();
             });
         }
+
+        layout.setPadding(new Insets(10, 10, 10, 10));
 
         layout.setTop(turnInfo);
         layout.setCenter(gameGrid);
@@ -73,6 +88,16 @@ public class TicTacToeApplication extends Application {
         b7.setFont(Font.font("Monospaced", 40));
         b8.setFont(Font.font("Monospaced", 40));
         b9.setFont(Font.font("Monospaced", 40));
+
+        b1.setPrefSize(90, 90);
+        b2.setPrefSize(90, 90);
+        b3.setPrefSize(90, 90);
+        b4.setPrefSize(90, 90);
+        b5.setPrefSize(90, 90);
+        b6.setPrefSize(90, 90);
+        b7.setPrefSize(90, 90);
+        b8.setPrefSize(90, 90);
+        b9.setPrefSize(90, 90);
     }
 
     public void setGrid(GridPane grid, Button b1, Button b2, Button b3, Button b4, Button b5, Button b6, Button b7, Button b8, Button b9) {
@@ -85,6 +110,9 @@ public class TicTacToeApplication extends Application {
         grid.add(b7, 2, 0);
         grid.add(b8, 2, 1);
         grid.add(b9, 2, 2);
+
+        grid.setHgap(5);
+        grid.setVgap(5);
     }
 
     public ArrayList<Button> addBtnsToArrayList(Button b1, Button b2, Button b3, Button b4, Button b5, Button b6, Button b7, Button b8, Button b9) {
@@ -100,5 +128,17 @@ public class TicTacToeApplication extends Application {
         buttons.add(b9);
 
         return buttons;
+    }
+
+    public void switchPlayer() {
+        if (this.currentPlayer.equals("X")) {
+            this.currentPlayer = "O";
+        } else {
+            this.currentPlayer = "X";
+        }
+    }
+
+    public void defineWinner() {
+
     }
 }
