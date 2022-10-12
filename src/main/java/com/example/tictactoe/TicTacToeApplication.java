@@ -67,7 +67,7 @@ public class TicTacToeApplication extends Application {
 
                 switchPlayer();
                 turnInfo.setText("Turn: " + currentPlayer);
-                defineWinner();
+                defineWinner(b1, b2, b3, b4, b5, b6, b7, b8, b9);
             });
         }
 
@@ -157,7 +157,7 @@ public class TicTacToeApplication extends Application {
         }
     }
 
-    public void defineWinner() {
+    public void defineWinner(Button b1, Button b2, Button b3, Button b4, Button b5, Button b6, Button b7, Button b8, Button b9) {
 
     }
 }
