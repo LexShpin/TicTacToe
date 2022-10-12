@@ -4,5 +4,5 @@ module com.example.tictactoe {
 
 
     opens com.example.tictactoe to javafx.fxml;
-    exports com.example.ticTacToe;
+    exports com.example.tictactoe;
 }
