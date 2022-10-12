@@ -2,11 +2,13 @@ package com.example.tictactoe;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -29,6 +31,7 @@ public class TicTacToeApplication extends Application {
         GridPane gameGrid = new GridPane();
 
         Label turnInfo = new Label("Turn: " + currentPlayer);
+        Button resetGame = new Button("Reset");
         Button b1 = new Button("");
         Button b2 = new Button("");
         Button b3 = new Button("");
@@ -39,7 +42,14 @@ public class TicTacToeApplication extends Application {
         Button b8 = new Button("");
         Button b9 = new Button("");
 
+        HBox top = new HBox();
+        top.setSpacing(50);
+        top.setAlignment(Pos.CENTER);
+
         turnInfo.setFont(Font.font("Monospaced bold", 40));
+
+        top.getChildren().addAll(turnInfo, resetGame);
+
         styleButtons(b1, b2, b3, b4, b5, b6, b7, b8, b9);
 
         setGrid(gameGrid, b1, b2, b3, b4, b5, b6, b7, b8, b9);
@@ -61,9 +71,18 @@ public class TicTacToeApplication extends Application {
             });
         }
 
+        resetGame.setOnAction((event) -> {
+            for (Button btn: this.playBtns) {
+                btn.setText("");
+            }
+
+            this.currentPlayer = "X";
+            turnInfo.setText("Turn: " + this.currentPlayer);
+        });
+
         layout.setPadding(new Insets(10, 10, 10, 10));
 
-        layout.setTop(turnInfo);
+        layout.setTop(top);
         layout.setCenter(gameGrid);
 
         Scene scene = new Scene(layout);
