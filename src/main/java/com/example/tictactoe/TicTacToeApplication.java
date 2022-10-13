@@ -18,10 +18,12 @@ public class TicTacToeApplication extends Application {
 
     private ArrayList<Button> playBtns;
     private String currentPlayer;
+    private String winner;
 
     public TicTacToeApplication() {
         this.playBtns = new ArrayList<>();
         this.currentPlayer = "X";
+        this.winner = "";
     }
 
     @Override
@@ -67,13 +69,18 @@ public class TicTacToeApplication extends Application {
 
                 switchPlayer();
                 turnInfo.setText("Turn: " + currentPlayer);
-                defineWinner(b1, b2, b3, b4, b5, b6, b7, b8, b9);
+
+                if (somebodyWon(b1, b2, b3, b4, b5, b6, b7, b8, b9)) {
+                    turnInfo.setText("Winner: " + this.winner);
+                    disableButtons(this.playBtns, true);
+                }
             });
         }
 
         resetGame.setOnAction((event) -> {
             for (Button btn: this.playBtns) {
                 btn.setText("");
+                disableButtons(this.playBtns, false);
             }
 
             this.currentPlayer = "X";
@@ -89,8 +96,6 @@ public class TicTacToeApplication extends Application {
 
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     public static void main(String[] args) {
@@ -157,7 +162,86 @@ public class TicTacToeApplication extends Application {
         }
     }
 
-    public void defineWinner(Button b1, Button b2, Button b3, Button b4, Button b5, Button b6, Button b7, Button b8, Button b9) {
+    public boolean somebodyWon(Button b1, Button b2, Button b3, Button b4, Button b5, Button b6, Button b7,
+                                  Button b8,
+                        Button b9) {
 
+        // Vertical X
+        if (b1.getText().equals("X") && b2.getText().equals("X") && b3.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        } else if (b4.getText().equals("X") && b5.getText().equals("X") && b6.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        } else if (b7.getText().equals("X") && b8.getText().equals("X") && b9.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        }
+
+        // Horizontal X
+        if (b1.getText().equals("X") && b4.getText().equals("X") && b7.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        } else if (b2.getText().equals("X") && b5.getText().equals("X") && b8.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        } else if (b3.getText().equals("X") && b6.getText().equals("X") && b9.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        }
+
+        // Diagonal X
+        if (b1.getText().equals("X") && b5.getText().equals("X") && b9.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        } else if (b3.getText().equals("X") && b5.getText().equals("X") && b7.getText().equals("X")) {
+            this.winner = "X";
+            return true;
+        }
+
+        // Vertical O
+        if (b1.getText().equals("O") && b2.getText().equals("O") && b3.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        } else if (b4.getText().equals("O") && b5.getText().equals("O") && b6.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        } else if (b7.getText().equals("O") && b8.getText().equals("O") && b9.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        }
+
+        // Horizontal O
+        if (b1.getText().equals("O") && b4.getText().equals("O") && b7.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        } else if (b2.getText().equals("O") && b5.getText().equals("O") && b8.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        } else if (b3.getText().equals("O") && b6.getText().equals("O") && b9.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        }
+
+        // Diagonal O
+        if (b1.getText().equals("O") && b5.getText().equals("O") && b9.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        } else if (b3.getText().equals("O") && b5.getText().equals("O") && b7.getText().equals("O")) {
+            this.winner = "O";
+            return true;
+        }
+
+        return false;
+    }
+
+    public void disableButtons(ArrayList<Button> buttons, boolean disable) {
+        for (Button btn: buttons) {
+            if (disable) {
+                btn.setDisable(true);
+            } else {
+                btn.setDisable(false);
+            }
+        }
     }
 }
